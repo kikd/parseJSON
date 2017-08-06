@@ -34,7 +34,7 @@ typedef struct _PERSONINFO {
 	unsigned int age;
 }PERSON_INFO;
 
-int main()
+int main(void)
 {
 	JSON_Value *root_value = json_parse_file("./personal.json");
 	JSON_Object *root = json_object(root_value);
@@ -42,11 +42,15 @@ int main()
 	PERSON_INFO person;
 	
 	JSON2STRUCT_NUM(root, person, age);
-	JSON2STRUCT_STR(root, person, name.first, 32);
-	JSON2STRUCT_STR(root, person, name.last, 32);
-
+	JSON2STRUCT_STR(root, person, name.first, NAME_MAX);
+	JSON2STRUCT_STR(root, person, name.last, NAME_MAX
+);
 
 	json_value_free(root_value);
+
+	printf("name.first:%s\n", person.name.first);
+	printf("name.last:%s\n", person.name.last);
+	printf("name.age:%d\n", person.age);
 	
     return 0;
 }
